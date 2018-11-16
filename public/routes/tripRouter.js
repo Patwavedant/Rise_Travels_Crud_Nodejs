@@ -16,12 +16,13 @@ function router(Trips) {
   tripRouter.use('/:id', (req, res, next) => {
     Trips.findById(req.params.id, (err, trips) => {
       if (err) {
+        console.log('Error while fetching');
         res.status(304).send(err);
       } else if (trips) {
         req.trips = trips;
         next();
       } else {
-        res.status(500).send('No Trips found')
+        res.status(500).send({ status: 500, message: 'No Trip Found' });
       }
     })
   })
